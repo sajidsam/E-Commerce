@@ -1,153 +1,201 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { faLocationDot, faSearch, faUser, faChevronDown, faGlobe } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  faLocationDot,
+  faSearch,
+  faUser,
+  faChevronDown,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const languages = [
-  { code: 'us', name: 'English' },
-  { code: 'es', name: 'Spanish' },
-  { code: 'fr', name: 'French' },
-  { code: 'de', name: 'German' },
-  { code: 'bd', name: 'Bangla' }
+// Languages
+const langs = [
+  { code: "us", name: "English" },
+  { code: "es", name: "Spanish" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "bd", name: "Bangla" },
+];
+
+// Categories
+const cats = [
+  "All",
+  "Electronics",
+  "Books",
+  "Home & Kitchen",
+  "Fashion",
+  "Beauty",
+  "Sports",
+  "Toys",
+  "Groceries",
+  "Automotive",
 ];
 
 const Header = () => {
-  const [location, setLocation] = useState(null);
-  const [selectedLang, setSelectedLang] = useState(languages[0]);
-  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const [loc, setLoc] = useState(null);
+  const [lang, setLang] = useState(langs[0]);
+  const [cat, setCat] = useState(cats[0]);
+  const [openLang, setOpenLang] = useState(false);
+  const [openCat, setOpenCat] = useState(false);
+  const langRef = useRef(null);
+  const catRef = useRef(null);
 
+  // Fetch location
   useEffect(() => {
-    fetch('https://ipwho.is/')
+    fetch("https://ipwho.is/")
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) setLocation(data);
+        if (data.success) setLoc(data);
       })
-      .catch((err) => console.error('Error fetching location:', err));
+      .catch((err) => console.error("Error fetching location:", err));
   }, []);
 
-
+ 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsLangDropdownOpen(false);
-      }
+    const close = (e) => {
+      if (langRef.current && !langRef.current.contains(e.target)) setOpenLang(false);
+      if (catRef.current && !catRef.current.contains(e.target)) setOpenCat(false);
     };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  const handleLanguageSelect = (language) => {
-    setSelectedLang(language);
-    setIsLangDropdownOpen(false);
-  };
+
+
+
+
+
+
+
 
   return (
-    <>
-      {/* Upper Section */}
-      <section className='bg-gray-900 p-3 flex items-center space-x-10'>
+    <section className="bg-gray-900 p-3 flex items-center space-x-10 justify-center sticky z-50 top-0">
+
+
+      {/* Logo */}
+      <div>
+        <h1 className=" font-bold text-3xl text-green-600">Glo<span className="text-white">Bus</span></h1>
+      </div>
 
 
 
-
-
-        {/* Brand Logo */}
-        <div>
-          <h1 className='text-white font-semibold text-2xl'>GloBus</h1>
+      {/* Location */}
+      <div className="text-white flex items-center">
+        <FontAwesomeIcon icon={faLocationDot} className="text-2xl mr-2" />
+        <div className="font-semibold leading-tight">
+          <h1 className="text-xs">Deliver to</h1>
+          <h1 className="text-sm font-bold">{loc ? `${loc.city}, ${loc.country}` : "Loading..."}</h1>
         </div>
+      </div>
 
 
 
 
+      {/* Search Bar */}
+ <div className="flex flex-1 mx-6 max-w-3xl relative">
+  {/* Category Dropdown */}
+  <div className="relative" ref={catRef}>
+    <button
+      onClick={() => setOpenCat(!openCat)}
+      className="bg-gray-100 text-gray-700 px-4 h-11 rounded-l-md border-r border-gray-300 text-sm font-medium flex items-center hover:bg-gray-200 transition"
+    >
+      {cat}
+      <FontAwesomeIcon
+        icon={faChevronDown}
+        className={`ml-2 text-xs transition-transform ${openCat ? "rotate-180" : ""}`}
+      />
+    </button>
 
-
-        {/* Delivery */}
-        <div className='text-white flex items-center'>
-          <FontAwesomeIcon icon={faLocationDot} className='text-2xl mr-2' />
-          <div className='font-semibold leading-tight'>
-            <h1 className="text-xs">Deliver to</h1>
-            <h1 className="text-sm font-bold">{location ? `${location.city}, ${location.country}` : 'Loading...'}</h1>
-          </div>
-        </div>
-
-
-
-        {/* Search Section */}
-        <div className='flex flex-1 mx-4'>
-          <select className='bg-gray-100 text-black px-2 rounded-l-md border-none outline-none text-sm'>
-            <option>All</option>
-            <option>Electronics</option>
-            <option>Books</option>
-            <option>Home & Kitchen</option>
-          </select>
-          <input
-            type='text'
-            placeholder='Search GloBus'
-            className='flex-1 px-3 py-1 text-black outline-none bg-white'
-          />
-          <button className='bg-orange-400 px-4 rounded-r-md hover:bg-orange-500 transition-colors'>
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-        </div>
-
-
-  {/* Language Selector */}
-        <div className="relative" ref={dropdownRef}>
+    {openCat && (
+      <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-md shadow-lg py-2 z-50">
+        {cats.map((c) => (
           <button
-            className="flex items-center text-white px-2 py-1 rounded hover:outline-1 hover:outline-white"
-            onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+            key={c}
+            className={`w-full px-4 py-2 text-sm text-left hover:bg-blue-50 ${
+              cat === c ? "bg-blue-100 text-blue-800" : "text-gray-800"
+            }`}
+            onClick={() => {
+              setCat(c);
+              setOpenCat(false);
+            }}
           >
+            {c}
+          </button>
+        ))}
+      </div>
+    )}
+  </div>
 
-            <span className="font-bold flex items-center">
-              <img
-                src={`https://flagcdn.com/${selectedLang.code}.svg`}
-                alt={selectedLang.name}
-                className="w-5 h-4 mr-2 object-cover"
-              />
-              {selectedLang.name}
-            </span>
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className={`ml-1 text-xs transition-transform ${isLangDropdownOpen ? 'rotate-180' : ''}`}
+
+  <input
+    type="text"
+    placeholder={`Search in ${cat}...`}
+    className="flex-1 px-4 h-11 text-black outline-none bg-white border-t border-b border-gray-300 focus:ring-2 focus:ring-orange-400"
+  />
+
+  <button className="bg-gradient-to-r from-orange-400 to-orange-500 px-5 h-11 rounded-r-md hover:from-orange-500 hover:to-orange-600 transition flex items-center justify-center">
+    <FontAwesomeIcon icon={faSearch} className="text-white text-lg" />
+  </button>
+</div>
+
+
+      {/* Language Selector */}
+      <div className="relative" ref={langRef}>
+        <button
+          className="flex items-center text-white px-2 py-1 rounded hover:outline-1 hover:outline-white"
+          onClick={() => setOpenLang(!openLang)}
+        >
+          <span className="font-bold flex items-center">
+            <img
+              src={`https://flagcdn.com/${lang.code}.svg`}
+              alt={lang.name}
+              className="w-5 h-4 mr-2 object-cover"
             />
-          </button>
+            {lang.name}
+          </span>
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className={`ml-1 text-xs transition-transform ${openLang ? "rotate-180" : ""}`}
+          />
+        </button>
 
-          {isLangDropdownOpen && (
-            <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+        {openLang && (
+          <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+            {langs.map((l) => (
+              <button
+                key={l.code}
+                className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-blue-50 ${
+                  lang.code === l.code ? "bg-blue-100 text-blue-800" : "text-gray-800"
+                }`}
+                onClick={() => {
+                  setLang(l);
+                  setOpenLang(false);
+                }}
+              >
+                <img
+                  src={`https://flagcdn.com/${l.code}.svg`}
+                  alt={l.name}
+                  className="w-5 h-4 mr-2 object-cover"
+                />
+                <span>{l.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
-              {languages.map((language) => (
-                <button
-                  key={language.code}
-                  className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-blue-50 ${selectedLang.code === language.code ? 'bg-blue-100 text-blue-800' : 'text-gray-800'
-                    }`}
-                  onClick={() => handleLanguageSelect(language)}
-                >
-                  <img
-                    src={`https://flagcdn.com/${language.code}.svg`}
-                    alt={language.name}
-                    className="w-5 h-4 mr-2 object-cover"
-                  />
-                  <span>{language.name}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+      {/* Cart */}
+      <div className="text-white text-sm cursor-pointer flex items-center">
+        <FontAwesomeIcon icon={faCartShopping} />
+        <h1 className="mx-1">Cart</h1>
+      </div>
 
-
-
-        {/* Sign in */}
-        <div className='text-white leading-tight mx-0 flex items-center'>
-          <FontAwesomeIcon icon={faUser} className='text-white mr-1' />
-          <button className='rounded px-2 font-semibold  py-1'>
-            Sign in
-          </button>
-        </div>
-
-      </section>
-    </>
+      {/* Sign In */}
+      <div className="text-white text-sm cursor-pointer flex items-center">
+        <FontAwesomeIcon icon={faUser} />
+        <h1 className="mx-1">Sign In</h1>
+      </div>
+    </section>
   );
 };
 
