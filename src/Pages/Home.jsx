@@ -1,0 +1,33 @@
+
+import Header from '../Components/Header';
+import AdvBanner from '../Components/AdvBanner';
+import Footer from '../Components/Footer';
+import MenuItem from '../Components/MenuItem';
+import PromotionCard from '../Components/PromotionCard';
+import Timer from '../Components/Timer';
+const Home = () => {
+    return (
+        <>
+
+            <Header></Header>
+
+            <div className='flex ml-10 space-x-5'>
+
+                <div className='flex flex-col'>
+                    <MenuItem></MenuItem>
+                    <Timer></Timer>
+
+                </div>
+                
+                <AdvBanner></AdvBanner>
+                <PromotionCard></PromotionCard>
+            </div>
+
+            <Footer></Footer>
+
+
+        </>
+    );
+};
+
+export default Home;

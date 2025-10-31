@@ -20,7 +20,7 @@ const AdvBanner = () => {
 
   return (
     <div
-      className="relative w-full max-w-[1200px] h-[600px] overflow-hidden mx-auto rounded-md my-10"
+      className="relative w-full max-w-[1200px] h-[600px] overflow-hidden mx-5 rounded-md my-10"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

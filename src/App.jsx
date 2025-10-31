@@ -1,19 +1,17 @@
-import AdvBanner from "./Components/AdvBanner"
-import Footer from "./Components/Footer"
-import Header from "./Components/Header"
+
+import { BrowserRouter } from "react-router-dom"
+import AllRoutes from "./Routes/AllRoutes"
+
 
 function App() {
   
 
   return (
-    <>
-    
-  
-    <Header></Header>
-    <AdvBanner></AdvBanner>
-    <Footer></Footer>
-    
-    </>
+    <BrowserRouter>
+
+      <AllRoutes></AllRoutes>
+
+    </BrowserRouter>
   )
 }
 

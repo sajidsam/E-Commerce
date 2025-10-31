@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+/* Google Fonts */
+
+.indie{
+  font-family: "Indie Flower", cursive;
+  font-style: normal;
+}
+
+
+.oswald {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+}
