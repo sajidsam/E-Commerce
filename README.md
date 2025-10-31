@@ -1,12 +1,103 @@
-# React + Vite
+# GloBus Commerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**GloBus Commerce** is a modern, responsive, and scalable e-commerce web platform built with React and Vite. It provides a seamless online shopping experience with fast performance, user authentication, and dynamic product management.
 
-Currently, two official plugins are available:
+Live Demo: [GloBus-Commerce](https://globus24.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* Dynamic e-commerce experience — fully responsive and optimized for speed.
+* User authentication — secure sign-in and sign-up using Firebase.
+* Smart navigation — organized routes with React Router.
+* Modern UI — built with Tailwind CSS for a clean and flexible design system.
+* Vite-powered development — fast bundling and hot reloads.
+* Reusable components — modular structure with reusable UI blocks.
+* Error handling — custom 404 error page for undefined routes.
+
+---
+
+## Tech Stack
+
+| Category           | Technology       |
+| ------------------ | ---------------- |
+| Frontend Framework | React (Vite)     |
+| Styling            | Tailwind CSS     |
+| Routing            | React Router DOM |
+| Authentication     | Firebase Auth    |
+| Deployment         | Netlify          |
+| Version Control    | Git & GitHub     |
+
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/globus-commerce.git
+cd globus-commerce
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Set Up Firebase
+
+* Create a new Firebase project.
+* Enable Email/Password or Google Auth in Firebase Authentication.
+* Copy your Firebase config and add it to `.env`:
+
+```
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
+
+### 4. Run the Development Server
+
+```bash
+npm run dev
+```
+
+### 5. Build for Production
+
+```bash
+npm run build
+```
+
+---
+
+## Future Improvements
+
+* Product filtering and sorting system.
+* Payment gateway integration (SSLCommerz / Stripe).
+* AI-based product recommendation engine.
+* Admin dashboard for product management.
+* Real-time analytics dashboard.
+
+---
+
+## License
+
+This project is licensed under **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+* You may **use, study, and share** this project for **educational and personal purposes only**.
+* **Commercial use is not allowed**.
+* Proper **credit must be given** to the original creator.
+
+For more details, see the full license: [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
+---
+
+## Author
+
+**Sajidul Islam**
+Developer of GloBus Commerce
