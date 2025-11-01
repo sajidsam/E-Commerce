@@ -5,6 +5,7 @@ import Footer from '../Components/Footer';
 import MenuItem from '../Components/MenuItem';
 import PromotionCard from '../Components/PromotionCard';
 import Timer from '../Components/Timer';
+import ContactUs from '../Components/ContactUs';
 const Home = () => {
     return (
         <>
@@ -24,6 +25,7 @@ const Home = () => {
                 <PromotionCard></PromotionCard>
             </div>
 
+            <ContactUs></ContactUs>
             <Footer></Footer>
 
 
