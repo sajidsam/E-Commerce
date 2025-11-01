@@ -14,6 +14,7 @@ const Home = () => {
             <div className='flex ml-10 space-x-5'>
 
                 <div className='flex flex-col'>
+                    
                     <MenuItem></MenuItem>
                     <Timer></Timer>
 
