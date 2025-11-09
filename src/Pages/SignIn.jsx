@@ -1,27 +1,41 @@
 import React, { useState } from "react";
+import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase.config";
-import {signInWithEmailAndPassword,signInWithPopup,} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
+  
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setError("");
+
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Logged in user:", userCredential.user);
+      const res = await fetch("http://localhost:5000/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return setError(data.message || "Invalid credentials");
+      }
+
+      
+      localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      console.error(err);
+      setError("Server error, try again later");
     }
   };
+
 
   const handleGoogleLogin = async () => {
     setError("");
@@ -39,7 +53,7 @@ const SignIn = () => {
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
 
-        
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         <form onSubmit={handleEmailLogin} className="flex flex-col gap-4">
           <input
@@ -50,7 +64,6 @@ const SignIn = () => {
             required
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-
           <input
             type="password"
             placeholder="Password"
@@ -59,7 +72,6 @@ const SignIn = () => {
             required
             className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-
           <button
             type="submit"
             className="bg-blue-600 text-white rounded-lg p-3 hover:bg-blue-700 transition"
@@ -78,9 +90,21 @@ const SignIn = () => {
           onClick={handleGoogleLogin}
           className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg p-3 hover:bg-gray-100 transition"
         >
-          <img src="Images/Google.png" className="h-6 w-6"/>
+          <img src="Images/Google.png" className="h-6 w-6" alt="Google Logo" />
           Sign In with Google
         </button>
+
+        <div className="text-center mt-6">
+          <p className="text-gray-600">
+            Don’t have an account?{" "}
+            <span
+              onClick={() => navigate("/signup")}
+              className="text-blue-600 font-semibold cursor-pointer hover:underline"
+            >
+              Sign Up
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

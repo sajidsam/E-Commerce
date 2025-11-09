@@ -46,13 +46,13 @@ const ContactUs = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
-  // 🔊 Initialize Speech Recognition
+  
   useEffect(() => {
     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
-      recognition.lang = "bn-BD"; // Default Bangla
+      recognition.lang = "bn-BD"; 
       recognition.continuous = true;
       recognition.interimResults = true;
 
@@ -94,7 +94,7 @@ const ContactUs = () => {
   return (
     <>
       {isOpen && (
-        <div className="fixed bottom-20 right-10 w-80 h-[500px] rounded-2xl shadow-2xl bg-white flex flex-col overflow-hidden transition-all">
+        <div className="fixed bottom-24 right-10 w-80 h-[500px] rounded-2xl shadow-2xl bg-white flex flex-col overflow-hidden transition-all">
           <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-4 py-3 flex items-center justify-between">
             <span className="font-semibold">GloBus Support</span>
             <button

@@ -33,7 +33,7 @@ const Timer = () => {
     return (
         <>
             <div className='oswald text-4xl font-bold text-black flex text-center justify-center mt-5'>
-                <h1 className="blast">Monthly Deals</h1>
+                <h1 className=" dark:text-black text-white">Monthly Deals</h1>
             </div>
 
             <div className="text-center bg-red-600 text-white font-bold mt-5 p-3 rounded-lg w-80  mx-auto flex justify-around">

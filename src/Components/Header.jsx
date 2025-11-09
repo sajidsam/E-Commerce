@@ -6,10 +6,12 @@ import {
   faUser,
   faChevronDown,
   faHeart,
+  faMoon,
+  faSun,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const langs = [
   { code: "us", name: "English" },
@@ -37,21 +39,42 @@ const Header = () => {
   const [cat, setCat] = useState(cats[0]);
   const [openLang, setOpenLang] = useState(false);
   const [openCat, setOpenCat] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [loc, setLoc] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   const langRef = useRef(null);
   const catRef = useRef(null);
+  const profRef = useRef(null);
 
   const auth = getAuth();
 
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser || null);
+      if (currentUser) {
+        setUser(prev => ({
+          ...prev,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL
+        }));
+      }
     });
     return () => unsubscribe();
   }, [auth]);
+
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setOpenProfile(false);
+    setUser(null);
+    localStorage.removeItem("user");
+  };
 
 
   useEffect(() => {
@@ -63,38 +86,41 @@ const Header = () => {
           setLoc({ city: data.city, country: data.country });
         }
       } catch (err) {
-        console.error("Failed to fetch location:", err);
+        console.error(err);
       }
     };
     fetchLocation();
   }, []);
 
+
   useEffect(() => {
     const close = (e) => {
-      if (langRef.current && !langRef.current.contains(e.target))
-        setOpenLang(false);
-      if (catRef.current && !catRef.current.contains(e.target))
-        setOpenCat(false);
+      if (langRef.current && !langRef.current.contains(e.target)) setOpenLang(false);
+      if (catRef.current && !catRef.current.contains(e.target)) setOpenCat(false);
+      if (profRef.current && !profRef.current.contains(e.target)) setOpenProfile(false);
     };
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  const firstName = user?.displayName?.split(" ")[0] || "";
+
+  useEffect(() => {
+    if (darkMode) document.body.classList.add("dark", "bg-gray-800");
+    else document.body.classList.remove("dark", "bg-gray-800");
+  }, [darkMode]);
+
+  const firstName = user?.name?.split(" ")[0] || user?.displayName?.split(" ")[0] || "";
 
   return (
     <>
-      <section className="bg-gray-900 p-3 flex items-center justify-center space-x-10  sticky z-50 top-0 shadow-lg border-b border-gray-700">
-
-<div></div>
-        {/* Logo */}
+      <section className="bg-gray-900 p-3 flex items-center justify-center space-x-10 sticky z-50 top-0 shadow-lg border-b border-gray-700">
+        <div></div>
         <div>
           <h1 className="font-bold text-3xl text-green-600">
             Glo<span className="text-white">Bus</span>
           </h1>
         </div>
 
-        {/* Location */}
         <div className="text-white flex items-center">
           <FontAwesomeIcon icon={faLocationDot} className="text-2xl mr-2" />
           <div className="font-semibold leading-tight">
@@ -105,7 +131,6 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Search Bar */}
         <div className="flex flex-1 mx-6 max-w-xl relative">
           <div className="relative" ref={catRef}>
             <button
@@ -115,8 +140,7 @@ const Header = () => {
               {cat}
               <FontAwesomeIcon
                 icon={faChevronDown}
-                className={`ml-2 text-xs transition-transform ${openCat ? "rotate-180" : ""
-                  }`}
+                className={`ml-2 text-xs transition-transform ${openCat ? "rotate-180" : ""}`}
               />
             </button>
 
@@ -150,25 +174,18 @@ const Header = () => {
           </button>
         </div>
 
-
-{/* Language Selector */}
         <div className="relative" ref={langRef}>
           <button
             className="flex items-center text-white px-2 py-1 rounded hover:outline-1 hover:outline-white"
             onClick={() => setOpenLang(!openLang)}
           >
             <span className="font-bold flex items-center">
-              <img
-                src={`https://flagcdn.com/${lang.code}.svg`}
-                alt={lang.name}
-                className="w-5 h-4 mr-2 object-cover"
-              />
+              <img src={`https://flagcdn.com/${lang.code}.svg`} alt={lang.name} className="w-5 h-4 mr-2 object-cover" />
               {lang.name}
             </span>
             <FontAwesomeIcon
               icon={faChevronDown}
-              className={`ml-1 text-xs transition-transform ${openLang ? "rotate-180" : ""
-                }`}
+              className={`ml-1 text-xs transition-transform ${openLang ? "rotate-180" : ""}`}
             />
           </button>
 
@@ -177,20 +194,14 @@ const Header = () => {
               {langs.map((l) => (
                 <button
                   key={l.code}
-                  className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-blue-50 ${lang.code === l.code
-                    ? "bg-blue-100 text-blue-800"
-                    : "text-gray-800"
+                  className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-blue-50 ${lang.code === l.code ? "bg-blue-100 text-blue-800" : "text-gray-800"
                     }`}
                   onClick={() => {
                     setLang(l);
                     setOpenLang(false);
                   }}
                 >
-                  <img
-                    src={`https://flagcdn.com/${l.code}.svg`}
-                    alt={l.name}
-                    className="w-5 h-4 mr-2 object-cover"
-                  />
+                  <img src={`https://flagcdn.com/${l.code}.svg`} alt={l.name} className="w-5 h-4 mr-2 object-cover" />
                   <span>{l.name}</span>
                 </button>
               ))}
@@ -198,43 +209,67 @@ const Header = () => {
           )}
         </div>
 
-
-
-        {/* Cart */}
         <div className="text-white cursor-pointer flex items-center">
           <FontAwesomeIcon icon={faCartShopping} />
           <h1 className="mx-1">Cart</h1>
         </div>
 
-        {/* Wishlist */}
         <div className="text-white cursor-pointer flex items-center">
           <FontAwesomeIcon icon={faHeart} />
           <h1 className="mx-1">Wishlist</h1>
         </div>
 
-        
 
-        {/* Auth Section */}
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="relative inline-flex h-6 w-12 items-center rounded-full bg-gray-400 dark:bg-gray-700 transition"
+        >
+          <span className="absolute left-1 text-xs text-yellow-400">
+            <FontAwesomeIcon icon={faSun} />
+          </span>
+          <span className="absolute right-1 text-xs text-white">
+            <FontAwesomeIcon icon={faMoon} />
+          </span>
+
+          <span
+            className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${darkMode ? "translate-x-6" : "translate-x-1"
+              }`}
+          ></span>
+        </button>
+
         {user ? (
-          <div className="flex items-center space-x-2 cursor-pointer">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
-              <img
-                src={
-                  user?.photoURL
-                    ? user.photoURL.startsWith("http://")
-                      ? user.photoURL.replace("http://", "https://")
-                      : user.photoURL
-                    : "/placeholder.png"
-                }
-                alt={firstName || "User"}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-                onError={(e) => (e.target.src = "/placeholder.png")}
-              />
+          <div ref={profRef} className="relative">
+            <div
+              className="flex items-center space-x-2 cursor-pointer"
+              onClick={() => setOpenProfile(!openProfile)}
+            >
+              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+                <img
+                  src={
+                    user?.photoURL
+                      ? user.photoURL.startsWith("http://")
+                        ? user.photoURL.replace("http://", "https://")
+                        : user.photoURL
+                      : "/placeholder.png"
+                  }
+                  alt={firstName}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <span className="text-white font-medium">{firstName}</span>
             </div>
-            <span className="text-white font-medium">
-              {firstName || "User"}
-            </span>
+
+            {openProfile && (
+              <div className="absolute right-0 mt-2 w-40 bg-white rounded shadow-lg py-2 z-50">
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <Link to="/SignIn">
@@ -244,22 +279,18 @@ const Header = () => {
             </div>
           </Link>
         )}
-
       </section>
 
       <section>
-        <div>
-          <marquee
-            behavior="scroll"
-            direction="left"
-            scrollamount="6"
-            className="bg-orange-100 p-1"
-          >
-            দ্রষ্টব্য: পণ্য গ্রহণ করার আগে প্যাকেট খুলে দেখুন—ড্যামেজ আছে কি না নিশ্চিত করুন। সমস্যা থাকলে অবিলম্বে রাইডারকে দেখান ও গ্রহণ বর্জন/রিপোর্ট করুন।
-          </marquee>
-        </div>
+        <marquee
+          behavior="scroll"
+          direction="left"
+          scrollamount="6"
+          className="bg-orange-100 p-1"
+        >
+          দ্রষ্টব্য: পণ্য গ্রহণ করার আগে প্যাকেট খুলে দেখুন—ড্যামেজ আছে কি না নিশ্চিত করুন। সমস্যা থাকলে অবিলম্বে রাইডারকে দেখান ও গ্রহণ বর্জন/রিপোর্ট করুন।
+        </marquee>
       </section>
-
     </>
   );
 };
