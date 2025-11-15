@@ -28,6 +28,7 @@ const SignUp = () => {
 
         try {
             const user = { name, email, phone, password };
+            
 
             const res = await fetch("http://localhost:5000/signup", {
                 method: "POST",

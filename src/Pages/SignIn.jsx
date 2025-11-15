@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase.config";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Hooks/AuthContext";
 
 const SignIn = () => {
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setError("");
@@ -22,27 +23,35 @@ const SignIn = () => {
       });
 
       const data = await res.json();
+      if (!res.ok) return setError(data.message || "Invalid credentials");
 
-      if (!res.ok) {
-        return setError(data.message || "Invalid credentials");
-      }
 
-      
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/");
+      login(data);
+
+   
+      if (data.role === "admin") navigate("/admin");
+      else navigate("/");
+
     } catch (err) {
-      console.error(err);
       setError("Server error, try again later");
     }
   };
-
 
   const handleGoogleLogin = async () => {
     setError("");
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log("Google login user:", result.user);
+      const user = result.user;
+
+      const userInfo = {
+        name: user.displayName,
+        email: user.email,
+        role: "user",
+      };
+
+      login(userInfo);
       navigate("/");
+
     } catch (err) {
       setError(err.message);
     }
@@ -62,19 +71,21 @@ const SignIn = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg p-3"
           />
+
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="border border-gray-300 rounded-lg p-3"
           />
+
           <button
             type="submit"
-            className="bg-blue-600 text-white rounded-lg p-3 hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white rounded-lg p-3"
           >
             Sign In
           </button>
@@ -88,23 +99,11 @@ const SignIn = () => {
 
         <button
           onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg p-3 hover:bg-gray-100 transition"
+          className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg p-3"
         >
           <img src="Images/Google.png" className="h-6 w-6" alt="Google Logo" />
           Sign In with Google
         </button>
-
-        <div className="text-center mt-6">
-          <p className="text-gray-600">
-            Don’t have an account?{" "}
-            <span
-              onClick={() => navigate("/signup")}
-              className="text-blue-600 font-semibold cursor-pointer hover:underline"
-            >
-              Sign Up
-            </span>
-          </p>
-        </div>
       </div>
     </div>
   );
