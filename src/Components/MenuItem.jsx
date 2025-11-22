@@ -56,7 +56,8 @@ const MenuItem = () => {
       <div className="bg-gray-100 rounded-xl w-80 h-100 p-4 ">
         {menuData.map((item, index) => (
           <div key={index} className="relative">
-            {/* Main Menu Item */}
+            
+            {/* Main Menu  */}
             <div
               className="flex items-center justify-between space-x-2 cursor-pointer hover:bg-white/10 px-3 py-2 rounded transition"
               onClick={() => toggleSubMenu(index)}

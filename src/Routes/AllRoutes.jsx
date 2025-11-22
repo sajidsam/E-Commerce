@@ -5,21 +5,40 @@ import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
 import Error from "../Pages/Error";
 import ProductsDetail from "../Pages/ProductsDetail";
-import AdminDashboard from "../Admin/AdminDashboard";
+import Checkout from '../Pages/Checkout';
+
 import AdminLayout from "../Admin/AdminLayout";
-import AdminProducts from "../Admin/AdminProducts";
+import AdminDashboard from "../Admin/AdminDashboard";
 import AdminUser from "../Admin/AdminUser";
+import AdminProducts from "../Admin/AdminProducts";
+import AdminOrder from "../Admin/AdminOrder";
 import PrivateRoute from "../Admin/PrivateRoute";
+import HeaderFooterWrap from "../Components/HeaderFooterWrap";
+import Cart from "../Pages/Cart";
+import OrderAndPayment from "../Pages/OrderAndPayment";
+
+
 
 const AllRoutes = () => {
   return (
     <Routes>
 
-      <Route path="/" element={<Home />} />
+      {/* Signin/Signip Routes */}
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/productDetail" element={<ProductsDetail />} />
 
+
+      {/* General Routes */}
+      <Route element={<HeaderFooterWrap />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/productDetail" element={<ProductsDetail />} />
+        <Route path="/productDetail/:id" element={<ProductsDetail />} />
+        <Route path="/checkout" element={<Checkout/>} />
+        <Route path="/orderHistory" element={<OrderAndPayment/>}/>
+      </Route>
+
+      {/* Private Admin Routes */}
       <Route
         path="/admin/*"
         element={
@@ -31,10 +50,11 @@ const AllRoutes = () => {
         <Route index element={<AdminDashboard />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
-        <Route path="users" element={<AdminUser />} />
+        <Route path="orders" element={<AdminOrder />} />
+        <Route path="customers" element={<AdminUser />} />
       </Route>
 
-      
+      {/* Error Route*/}
       <Route path="*" element={<Error />} />
     </Routes>
   );

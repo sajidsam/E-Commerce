@@ -49,7 +49,7 @@ const AdvBanner = () => {
         <FontAwesomeIcon icon={faChevronRight} size="lg" />
       </button>
 
-      <div className="absolute bottom-3 w-full flex justify-center gap-2">
+      <div className="absolute bottom-3 w-full flex justify-center gap-2 ">
         {slides.map((_, i) => (
           <button
             key={i}

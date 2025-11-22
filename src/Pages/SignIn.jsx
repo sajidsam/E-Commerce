@@ -3,6 +3,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase.config";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/AuthContext";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const { login } = useAuth();
@@ -25,13 +26,10 @@ const SignIn = () => {
       const data = await res.json();
       if (!res.ok) return setError(data.message || "Invalid credentials");
 
-
       login(data);
 
-   
       if (data.role === "admin") navigate("/admin");
       else navigate("/");
-
     } catch (err) {
       setError("Server error, try again later");
     }
@@ -51,7 +49,6 @@ const SignIn = () => {
 
       login(userInfo);
       navigate("/");
-
     } catch (err) {
       setError(err.message);
     }
@@ -90,6 +87,15 @@ const SignIn = () => {
             Sign In
           </button>
         </form>
+
+        <div className="my-4 text-center">
+          <span className="text-gray-600">
+            Don't have an account?{" "}
+            <Link to="/SignUp" className="text-blue-600 underline">
+              Sign Up
+            </Link>
+          </span>
+        </div>
 
         <div className="my-6 flex items-center">
           <hr className="flex-1 border-gray-300" />
