@@ -25,7 +25,7 @@ const AdminLayout = () => {
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
         {/* Logo */}
-        <div className="flex justify-center pb-4">
+        <div className="flex pb-4">
           <h1 className="font-bold text-3xl text-green-600">
             Glo<span className="text-white">Bus</span>
           </h1>

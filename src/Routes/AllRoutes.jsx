@@ -47,8 +47,8 @@ const AllRoutes = () => {
           </PrivateRoute>
         }
       >
-        <Route index element={<AdminDashboard />} />
-        <Route path="dashboard" element={<AdminDashboard />} />
+        {/* <Route index element={<AdminDashboard />} /> */}
+        {/* <Route path="dashboard" element={<AdminDashboard />} /> */}
         <Route path="products" element={<AdminProducts />} />
         <Route path="orders" element={<AdminOrder />} />
         <Route path="customers" element={<AdminUser />} />
