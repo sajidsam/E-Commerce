@@ -33,9 +33,9 @@ const AdminLayout = () => {
 
         {/* Nav Links */}
         <nav className="flex-1 space-y-3">
-          <NavLink to="/admin/dashboard" className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700">
+          {/* <NavLink to="/admin/dashboard" className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700">
             <FaDollarSign /> Dashboard
-          </NavLink>
+          </NavLink> */}
 
           <NavLink to="/admin/orders" className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700">
             <FaShoppingBag /> Orders
