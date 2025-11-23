@@ -77,7 +77,7 @@ const AdminProducts = () => {
   // Fetch products
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/browseProduct");
+      const res = await fetch("https://glo-bus-backend.vercel.app/browseProduct");
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -174,7 +174,7 @@ const AdminProducts = () => {
     return [...baseCategories, ...customCategories];
   };
 
-  // Close dropdown when clicking outside
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest('.category-dropdown')) {
@@ -195,7 +195,7 @@ const AdminProducts = () => {
   const deleteProduct = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        const res = await fetch(`http://localhost:5000/products/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://glo-bus-backend.vercel.app/products/${id}`, { method: "DELETE" });
         if (res.ok) fetchProducts();
       } catch (err) {
         console.log(err);
@@ -263,7 +263,7 @@ const AdminProducts = () => {
         const updateBody = { ...body };
         delete updateBody._id;
 
-        const res = await fetch(`http://localhost:5000/products/${editingProductId}`, {
+        const res = await fetch(`https://glo-bus-backend.vercel.app/products/${editingProductId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(updateBody),
@@ -275,7 +275,7 @@ const AdminProducts = () => {
           fetchProducts();
         }
       } else {
-        const res = await fetch("http://localhost:5000/addProducts", {
+        const res = await fetch("https://glo-bus-backend.vercel.app/addProducts", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)

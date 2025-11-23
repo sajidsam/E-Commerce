@@ -37,8 +37,8 @@ const AdminOrder = () => {
   const fetchAllOrders = async () => {
     try {
       setLoading(true);
-      // Remove the Authorization header since you don't have JWT tokens
-      const response = await fetch('http://localhost:5000/api/orders/all', {
+      
+      const response = await fetch('https://glo-bus-backend.vercel.app/api/orders/all', {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -52,33 +52,33 @@ const AdminOrder = () => {
       
       console.log('API Response:', data); // Debug log
       
-      // Handle the response based on your backend structure
+      
       if (data.success) {
-        // If orders are nested in data.orders (from paginated response)
+       
         if (data.data && data.data.orders) {
           setOrders(data.data.orders);
         } 
-        // If orders are directly in data array
+       
         else if (Array.isArray(data.data)) {
           setOrders(data.data);
         }
-        // If orders are at the root level
+        
         else if (Array.isArray(data.orders)) {
           setOrders(data.orders);
         }
-        // If it's a single order or different structure
+        
         else {
           console.warn('Unexpected data structure:', data);
           setOrders([]);
         }
       } else {
         setError(data.message || 'Failed to fetch orders');
-        setOrders([]); // Ensure orders is always an array
+        setOrders([]); 
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
       setError('Failed to load orders. Please try again.');
-      setOrders([]); // Ensure orders is always an array
+      setOrders([]); 
     } finally {
       setLoading(false);
     }
@@ -86,7 +86,7 @@ const AdminOrder = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      const response = await fetch(`https://glo-bus-backend.vercel.app/api/orders/${orderId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -148,7 +148,7 @@ const AdminOrder = () => {
     return sortDirection === 'asc' ? faSortUp : faSortDown;
   };
 
-  // Ensure orders is always an array before filtering
+  
   const filteredOrders = (Array.isArray(orders) ? orders : [])
     .filter(order => {
       const matchesSearch = 

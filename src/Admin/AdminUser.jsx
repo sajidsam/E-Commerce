@@ -7,7 +7,7 @@ const AdminUser = () => {
   // Fetch all users
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/admin/users");
+      const response = await fetch("https://glo-bus-backend.vercel.app/admin/users");
       const data = await response.json();
       setUsers(data);
       setLoading(false);
@@ -23,7 +23,7 @@ const AdminUser = () => {
     if (!confirmDelete) return; 
 
     try {
-      const response = await fetch(`http://localhost:5000/admin/user/${id}`, {
+      const response = await fetch(`https://glo-bus-backend.vercel.app/admin/user/${id}`, {
         method: "DELETE",
       });
 
@@ -42,7 +42,7 @@ const AdminUser = () => {
   // Toggle user status
   const toggleStatus = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/admin/user/${id}/status`, {
+      const response = await fetch(`https://glo-bus-backend.vercel.app/admin/user/${id}/status`, {
         method: "PATCH",
       });
       const data = await response.json();
