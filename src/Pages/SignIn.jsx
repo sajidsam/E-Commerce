@@ -17,7 +17,7 @@ const SignIn = () => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/signin", {
+      const res = await fetch("https://glo-bus-backend.vercel.app/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

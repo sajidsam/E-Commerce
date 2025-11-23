@@ -30,7 +30,7 @@ const SignUp = () => {
             const user = { name, email, phone, password };
             
 
-            const res = await fetch("http://localhost:5000/signup", {
+            const res = await fetch("https://glo-bus-backend.vercel.app/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user),
