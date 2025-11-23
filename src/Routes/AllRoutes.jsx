@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../Pages/Home";
 import SignIn from "../Pages/SignIn";
 import SignUp from "../Pages/SignUp";
@@ -17,16 +17,13 @@ import HeaderFooterWrap from "../Components/HeaderFooterWrap";
 import Cart from "../Pages/Cart";
 import OrderAndPayment from "../Pages/OrderAndPayment";
 
-
-
 const AllRoutes = () => {
   return (
     <Routes>
 
-      {/* Signin/Signip Routes */}
+      {/* Signin/Signup Routes */}
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-
 
       {/* General Routes */}
       <Route element={<HeaderFooterWrap />}>
@@ -40,17 +37,17 @@ const AllRoutes = () => {
 
       {/* Private Admin Routes */}
       <Route
-        path="/admin/*"
+        path="/admin"
         element={
           <PrivateRoute role="admin">
             <AdminLayout />
           </PrivateRoute>
         }
       >
-        {/* <Route index element={<AdminDashboard />} /> */}
-        {/* <Route path="dashboard" element={<AdminDashboard />} /> */}
-        <Route path="products" element={<AdminProducts />} />
+        {/* Default admin route - automatically redirect to orders */}
+        <Route index element={<Navigate to="orders" replace />} />
         <Route path="orders" element={<AdminOrder />} />
+        <Route path="products" element={<AdminProducts />} />
         <Route path="customers" element={<AdminUser />} />
       </Route>
 
