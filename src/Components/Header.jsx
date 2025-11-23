@@ -131,7 +131,7 @@ const Header = () => {
     const filtered = allProducts.filter((p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setSuggestions(filtered.slice(0, 10)); 
+    setSuggestions(filtered.slice(0, 10));
     setActiveIndex(-1);
   }, [searchQuery, allProducts]);
 
@@ -216,10 +216,13 @@ const Header = () => {
   return (
     <>
       <section className="bg-gray-900 flex items-center justify-between px-20 py-3 sticky z-50 top-0 shadow-lg border-b border-gray-700">
-        
+
         <div className="flex items-center space-x-6">
-          
-          <div className="flex items-center">
+
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             <h1 className="font-bold text-3xl text-green-600">
               Glo<span className="text-white">Bus</span>
             </h1>
@@ -235,7 +238,7 @@ const Header = () => {
           </div>
         </div>
 
-        
+
         <div className="flex flex-1 max-w-xl mx-8">
           <div className="flex w-full relative">
             {/* Category Button */}
@@ -345,7 +348,7 @@ const Header = () => {
           </div>
 
           {/* Orders & Payments*/}
-          <div className="text-white cursor-pointer flex items-center hover:text-gray-300 transition " onClick={()=>navigate("/orderHistory")}>
+          <div className="text-white cursor-pointer flex items-center hover:text-gray-300 transition " onClick={() => navigate("/orderHistory")}>
 
             <FontAwesomeIcon icon={faCreditCard} className="text-xl" />
             <h1 className="mx-2 font-medium text-base">{t.ordersPayments}</h1>
@@ -355,19 +358,19 @@ const Header = () => {
 
 
           <div className="text-white cursor-pointer flex items-center hover:text-gray-300 transition" onClick={() => navigate("/cart")}>
-             
+
             <FontAwesomeIcon icon={faCartShopping} className="text-xl" />
             <h1 className="mx-2 font-medium text-base">{t.cart}</h1>
           </div>
 
           {/* Wishlist */}
-          <div 
+          <div
             className="text-white cursor-pointer flex items-center hover:text-gray-300 transition"
             onMouseEnter={() => setWishlistHover(true)}
             onMouseLeave={() => setWishlistHover(false)}
           >
-            <FontAwesomeIcon 
-              icon={faHeart} 
+            <FontAwesomeIcon
+              icon={faHeart}
               className={`text-xl transition-colors ${wishlistHover ? 'text-red-500' : ''}`}
             />
             <h1 className="mx-2 font-medium text-base">{t.wishlist}</h1>
@@ -380,14 +383,12 @@ const Header = () => {
             }}
             className="relative inline-flex h-7 w-14 items-center rounded-full bg-gray-600 transition duration-200 ease-in-out"
           >
-            <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-200 ${
-              darkMode ? "translate-x-8" : "translate-x-1"
-            }`} />
-            <FontAwesomeIcon 
-              icon={darkMode ? faMoon : faSun} 
-              className={`absolute text-sm ${
-                darkMode ? "left-2 text-gray-300" : "right-2 text-yellow-400"
-              }`} 
+            <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform duration-200 ${darkMode ? "translate-x-8" : "translate-x-1"
+              }`} />
+            <FontAwesomeIcon
+              icon={darkMode ? faMoon : faSun}
+              className={`absolute text-sm ${darkMode ? "left-2 text-gray-300" : "right-2 text-yellow-400"
+                }`}
             />
           </button>
 
@@ -415,8 +416,8 @@ const Header = () => {
                     <p className="text-base font-medium text-gray-900">{t.hello}, {firstName}</p>
                     <p className="text-sm text-gray-500">{user?.email}</p>
                   </div>
-                  <button 
-                    onClick={handleLogout} 
+                  <button
+                    onClick={handleLogout}
                     className="w-full text-left px-4 py-3 text-base text-gray-700 hover:bg-gray-100 transition"
                   >
                     {t.logout}
