@@ -11,9 +11,9 @@ const Products = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
-  // Fetch products
+  // Fetch products - UPDATED BACKEND LINK
   useEffect(() => {
-    fetch("http://localhost:5000/browseProduct")
+    fetch("https://glo-bus-backend.vercel.app/browseProduct")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
