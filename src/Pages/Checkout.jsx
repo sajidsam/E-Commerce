@@ -83,7 +83,7 @@ const Checkout = () => {
       let cartData = [];
 
       if (user?.email) {
-        const response = await fetch(`http://localhost:5000/cart/${user.email}`);
+        const response = await fetch(`https://glo-bus-backend.vercel.app/cart/${user.email}`);
         if (response.ok) {
           cartData = await response.json();
         }

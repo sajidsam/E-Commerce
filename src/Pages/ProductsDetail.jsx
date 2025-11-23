@@ -20,7 +20,7 @@ const ProductsDetail = () => {
         setProductData(state.product);
       } else if (id) {
         try {
-          const res = await fetch(`http://localhost:5000/productDetail/${id}`);
+          const res = await fetch(`https://glo-bus-backend.vercel.app/productDetail/${id}`);
           const data = await res.json();
           if (data) setProductData(data);
           else navigate("/products");

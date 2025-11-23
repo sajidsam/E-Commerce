@@ -71,7 +71,7 @@ const SSLpayBtn = ({
       console.log('Sending payment data to backend:', paymentData);
 
       // SSL Commerz 
-      const response = await fetch('http://localhost:5000/api/sslcommerz/init', {
+      const response = await fetch('https://glo-bus-backend.vercel.app/api/sslcommerz/init', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

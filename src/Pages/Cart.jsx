@@ -46,7 +46,7 @@ const Cart = () => {
       console.log("Loading cart for user:", user?.email);
       
       if (user && user.email) {
-        const response = await fetch(`http://localhost:5000/cart/${user.email}`);
+        const response = await fetch(`https://glo-bus-backend.vercel.app/cart/${user.email}`);
         
         if (response.ok) {
           const backendCart = await response.json();
@@ -102,9 +102,9 @@ const Cart = () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user && user.email && item._id) {
-        console.log(`📡 Calling: PUT http://localhost:5000/cart/update/${item._id}`);
+        console.log(` Calling: PUT https://glo-bus-backend.vercel.app/cart/update/${item._id}`);
         
-        const updateResponse = await fetch(`http://localhost:5000/cart/update/${item._id}`, {
+        const updateResponse = await fetch(`https://glo-bus-backend.vercel.app/cart/update/${item._id}`, {
           method: 'PUT',
           headers: { 
             'Content-Type': 'application/json',
@@ -112,11 +112,11 @@ const Cart = () => {
           body: JSON.stringify({ quantity: newQuantity })
         });
         
-        console.log("📊 Update response status:", updateResponse.status);
+        console.log("Update response status:", updateResponse.status);
         
         if (updateResponse.ok) {
           const result = await updateResponse.json();
-          console.log("✅ Backend quantity updated successfully:", result);
+          console.log(" Backend quantity updated successfully:", result);
           
           await loadCartFromBackend();
         } else {
@@ -148,9 +148,9 @@ const Cart = () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user && user.email && item._id) {
-        console.log(`📡 Calling: DELETE http://localhost:5000/cart/remove/${item._id}`);
+        console.log(`Calling: DELETE https://glo-bus-backend.vercel.app/cart/remove/${item._id}`);
         
-        const deleteResponse = await fetch(`http://localhost:5000/cart/remove/${item._id}`, {
+        const deleteResponse = await fetch(`https://glo-bus-backend.vercel.app/cart/remove/${item._id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -191,9 +191,9 @@ const Cart = () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user && user.email) {
-        console.log(`📡 Calling: DELETE http://localhost:5000/cart/clear/${user.email}`);
+        console.log(`Calling: DELETE https://glo-bus-backend.vercel.app/cart/clear/${user.email}`);
         
-        const response = await fetch(`http://localhost:5000/cart/clear/${user.email}`, {
+        const response = await fetch(`https://glo-bus-backend.vercel.app/cart/clear/${user.email}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -295,7 +295,7 @@ const Cart = () => {
               <span className="font-medium">Continue Shopping</span>
             </button>
             <div className="min-h-[80px] flex items-center">
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text ">
                 Shopping Cart
               </h1>
             </div>

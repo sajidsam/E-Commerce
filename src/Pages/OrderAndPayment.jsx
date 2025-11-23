@@ -46,7 +46,7 @@ const OrderAndPayment = () => {
         return;
       }
       
-      const response = await fetch(`http://localhost:5000/api/orders?userEmail=${user.email}`);
+      const response = await fetch(`https://glo-bus-backend.vercel.app/api/orders?userEmail=${user.email}`);
       const data = await response.json();
       
       if (data.success) {

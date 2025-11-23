@@ -49,7 +49,7 @@ const AddToCartButton = ({ product, className = "", showIcon = true, showText = 
 
       console.log('Sending cart data:', cartData);
 
-      const response = await fetch('http://localhost:5000/cart/add', {
+      const response = await fetch('https://glo-bus-backend.vercel.app/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const AddToCartButton = ({ product, className = "", showIcon = true, showText = 
             quantity: 1,
             addedAt: new Date().toISOString()
           });
-          console.log('🆕 Added new item to cart');
+          console.log('Added new item to cart');
         }
         
         localStorage.setItem('cart', JSON.stringify(cartItems));
