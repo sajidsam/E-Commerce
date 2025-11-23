@@ -15,13 +15,13 @@ const Home = () => {
 
 
 
-            <div className='flex space-x-2 mx-44'>
+            <div className='flex space-x-2 justify-center items-center mx-10'>
                 <div className='flex flex-col '>
                     <MenuItem></MenuItem>
                     <Timer></Timer>
                 </div>
                 <AdvBanner></AdvBanner>
-                {/* <PromotionCard></PromotionCard> */}
+                <PromotionCard></PromotionCard>
             </div>
             <Products></Products>
             <Newsletter></Newsletter>
