@@ -12,6 +12,8 @@ const ProductsDetail = () => {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [loadingRelated, setLoadingRelated] = useState(false);
 
   // Load product dynamically on state or id change
   useEffect(() => {
@@ -35,6 +37,13 @@ const ProductsDetail = () => {
     loadProduct();
   }, [state, id, navigate]);
 
+  // Load related products when productData changes
+  useEffect(() => {
+    if (productData) {
+      loadRelatedProducts();
+    }
+  }, [productData]);
+
   // Initialize image and variant
   useEffect(() => {
     if (productData) {
@@ -43,6 +52,31 @@ const ProductsDetail = () => {
       setQuantity(1);
     }
   }, [productData]);
+
+  // Load related products based on category
+  const loadRelatedProducts = async () => {
+    if (!productData?.category) return;
+    
+    setLoadingRelated(true);
+    try {
+      const response = await fetch("https://glo-bus-backend.vercel.app/browseProduct");
+      const allProducts = await response.json();
+      
+      // Filter products by same category, exclude current product, and limit to 3
+      const related = allProducts
+        .filter(product => 
+          product.category === productData.category && 
+          product._id !== productData._id
+        )
+        .slice(0, 3);
+      
+      setRelatedProducts(related);
+    } catch (error) {
+      console.error("Error loading related products:", error);
+    } finally {
+      setLoadingRelated(false);
+    }
+  };
 
   const handleVariantChange = (variant) => {
     setSelectedVariant(variant);
@@ -106,6 +140,12 @@ const ProductsDetail = () => {
         from: 'buyNow'
       }
     });
+  };
+
+  // Handle related product click
+  const handleRelatedProductClick = (product) => {
+    navigate("/productDetail", { state: { product } });
+    window.scrollTo(0, 0);
   };
 
   if (!productData) return (
@@ -508,6 +548,67 @@ const ProductsDetail = () => {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Related Products Section */}
+      <div className="mt-8 bg-white rounded-lg border border-gray-200 p-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">Related Products</h3>
+        
+        {loadingRelated ? (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+        ) : relatedProducts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedProducts.map((product) => (
+              <div 
+                key={product._id}
+                className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                onClick={() => handleRelatedProductClick(product)}
+              >
+                <div className="relative">
+                  <img
+                    src={product.images?.[0]}
+                    alt={product.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  {product.discountPrice && (
+                    <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
+                      {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% OFF
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h4>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <p className="text-lg font-bold text-blue-600">
+                        ${product.discountPrice || product.price}
+                      </p>
+                      {product.discountPrice && (
+                        <p className="text-sm text-gray-500 line-through">${product.price}</p>
+                      )}
+                    </div>
+                    {product.ratings && (
+                      <div className="flex items-center gap-1">
+                        <div className="flex text-yellow-400">
+                          {[...Array(5)].map((_, i) => (
+                            <svg key={i} className={`w-3 h-3 ${i < Math.floor(product.ratings.average || 0) ? 'fill-current' : 'text-gray-300'}`} viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-600">{product.ratings.average}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 text-center py-8">No related products found.</p>
+        )}
       </div>
     </div>
   );
