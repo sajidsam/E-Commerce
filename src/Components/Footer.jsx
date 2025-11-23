@@ -1,4 +1,5 @@
 import React from "react";
+import ContactUs from "./ContactUs";
 
 const Footer = () => {
   return (
@@ -114,6 +115,9 @@ const Footer = () => {
           </select>
         </div>
       </div>
+
+      <ContactUs></ContactUs>
+      
     </footer>
   );
 };
