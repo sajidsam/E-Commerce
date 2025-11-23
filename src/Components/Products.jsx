@@ -149,7 +149,7 @@ const Products = () => {
       color: "text-green-600"
     },
     { 
-      title: "Fruits & Vegetables", 
+      title: "Food - Feed Your Hunger", 
       key: "fruits",
       icon: faAppleAlt,
       products: getProductsByCategory("Food"),
