@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 const Newsletter = () => {
     const [email, setEmail] = useState('');
@@ -35,8 +37,27 @@ const Newsletter = () => {
         }
     };
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
     return (
-        <div className="bg-gray-800 py-8 px-4 mt-50">
+        <div className="bg-gray-800 py-8 px-4 mt-40 relative">
+            {/* Back to Top Button - Simple with FontAwesome */}
+            <div className="absolute -top-24 left-1/2 transform -translate-x-1/2">
+                <button 
+                    onClick={scrollToTop}
+                    className="bg-black text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+                >
+                    <FontAwesomeIcon icon={faArrowUp} />
+                    Back to Top
+                </button>
+            </div>
+
+            {/* Newsletter Content */}
             <div className="max-w-md mx-auto text-center">
                 <h2 className="text-2xl font-bold text-white mb-4">
                     Subscribe to our newsletter

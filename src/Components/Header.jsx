@@ -24,15 +24,13 @@ const langs = [
 
 const cats = [
   "All",
-  "Electronics",
-  "Books",
-  "Home & Kitchen",
+  "Food",
+  "Kitchen Utils", 
   "Fashion",
-  "Beauty",
-  "Sports",
-  "Toys",
-  "Groceries",
-  "Automotive",
+  "Skin Care",
+  "Electronics",
+  "Stationary",
+  "Toys"
 ];
 
 const Header = () => {
@@ -128,30 +126,55 @@ const Header = () => {
       setActiveIndex(-1);
       return;
     }
-    const filtered = allProducts.filter((p) =>
-      p.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    
+    const filtered = allProducts.filter((p) => {
+      const matchesName = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = cat === "All" || p.category === cat;
+      return matchesName && matchesCategory;
+    });
+    
     setSuggestions(filtered.slice(0, 10));
     setActiveIndex(-1);
-  }, [searchQuery, allProducts]);
+  }, [searchQuery, allProducts, cat]); 
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      
+      const filtered = allProducts.filter((p) => {
+        const matchesName = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = cat === "All" || p.category === cat;
+        return matchesName && matchesCategory;
+      });
+      
+      if (filtered.length > 0) {
+        navigate(`/search?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(cat)}`, {
+          state: { searchResults: filtered, searchQuery, category: cat }
+        });
+        setSearchQuery("");
+        setSuggestions([]);
+      }
+    }
+  };
 
   const handleKeyDown = (e) => {
-    if (suggestions.length === 0) return;
-
-    if (e.key === "ArrowDown") {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (activeIndex >= 0 && suggestions.length > 0) {
+       
+        const selected = suggestions[activeIndex];
+        navigate(`/productDetail/${selected._id}`, { state: { product: selected } });
+        setSearchQuery("");
+        setSuggestions([]);
+      } else {
+       
+        handleSearch();
+      }
+    } else if (e.key === "ArrowDown") {
       e.preventDefault();
       setActiveIndex((prev) => (prev + 1) % suggestions.length);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setActiveIndex((prev) => (prev - 1 + suggestions.length) % suggestions.length);
-    } else if (e.key === "Enter") {
-      e.preventDefault();
-      if (activeIndex >= 0) {
-        const selected = suggestions[activeIndex];
-        navigate(`/productDetail/${selected._id}`, { state: { product: selected } });
-        setSearchQuery("");
-        setSuggestions([]);
-      }
     }
   };
 
@@ -308,7 +331,10 @@ const Header = () => {
               )}
             </div>
 
-            <button className="bg-orange-500 px-5 h-12 rounded-r-md flex items-center justify-center hover:bg-orange-600 transition">
+            <button 
+              className="bg-orange-500 px-5 h-12 rounded-r-md flex items-center justify-center hover:bg-orange-600 transition"
+              onClick={handleSearch}
+            >
               <FontAwesomeIcon icon={faSearch} className="text-white text-lg" />
             </button>
           </div>
@@ -355,8 +381,6 @@ const Header = () => {
           </div>
 
           {/* Cart */}
-
-
           <div className="text-white cursor-pointer flex items-center hover:text-gray-300 transition" onClick={() => navigate("/cart")}>
 
             <FontAwesomeIcon icon={faCartShopping} className="text-xl" />
@@ -371,7 +395,7 @@ const Header = () => {
           >
             <FontAwesomeIcon
               icon={faHeart}
-              className={`text-xl transition-colors ${wishlistHover ? 'text-red-500' : ''}`}
+              className="text-red-600 font-bold text-xl"
             />
             <h1 className="mx-2 font-medium text-base">{t.wishlist}</h1>
           </div>
