@@ -11,7 +11,7 @@ const Products = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
-  // Fetch products - UPDATED BACKEND LINK
+  // Fetch products 
   useEffect(() => {
     fetch("https://glo-bus-backend.vercel.app/browseProduct")
       .then((res) => res.json())
@@ -30,7 +30,7 @@ const Products = () => {
             const discountB = ((b.price - b.discountPrice) / b.price) * 100;
             return discountB - discountA;
           })
-          .slice(0, 10);
+          .slice(0, 4);
         setTopDeals(deals);
       })
       .catch((err) => console.error("Error fetching products:", err));

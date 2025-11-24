@@ -174,7 +174,7 @@ const AdminProducts = () => {
     return [...baseCategories, ...customCategories];
   };
 
-  
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest('.category-dropdown')) {
@@ -205,9 +205,9 @@ const AdminProducts = () => {
 
   // Load product into form for editing
   const handleEditProduct = (product) => {
-    setFormData({ 
+    setFormData({
       ...product,
-      tags: Array.isArray(product.tags) ? product.tags.join(', ') : product.tags 
+      tags: Array.isArray(product.tags) ? product.tags.join(', ') : product.tags
     });
     setActiveTab("basic");
     setIsEditing(true);
@@ -313,7 +313,7 @@ const AdminProducts = () => {
               {isEditing ? "Update Product" : "Add New Product"}
             </h2>
           </div>
-          
+
           {/* Tabs */}
           <div className="border-b">
             <div className="flex">
@@ -325,8 +325,8 @@ const AdminProducts = () => {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`px-6 py-3 font-medium text-sm ${activeTab === tab.id 
-                    ? "text-indigo-600 border-b-2 border-indigo-600" 
+                  className={`px-6 py-3 font-medium text-sm ${activeTab === tab.id
+                    ? "text-indigo-600 border-b-2 border-indigo-600"
                     : "text-gray-500 hover:text-gray-700"}`}
                   onClick={() => setActiveTab(tab.id)}
                 >
@@ -345,39 +345,39 @@ const AdminProducts = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
-                    <input 
-                      placeholder="Enter product name" 
-                      name="name" 
-                      value={formData.name} 
-                      onChange={handleChange} 
-                      required 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Enter product name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                    <textarea 
-                      placeholder="Product description" 
-                      name="description" 
-                      value={formData.description} 
-                      onChange={handleChange} 
+                    <textarea
+                      placeholder="Product description"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
                       rows="3"
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div className="relative category-dropdown">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                    <input 
-                      placeholder="Select or type category" 
-                      name="category" 
-                      value={formData.category} 
+                    <input
+                      placeholder="Select or type category"
+                      name="category"
+                      value={formData.category}
                       onChange={handleCategoryInput}
                       onFocus={() => setShowCategoryDropdown(true)}
                       onKeyPress={handleCategoryKeyPress}
-                      required 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                      required
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                     {showCategoryDropdown && (
                       <div className="absolute z-50 w-4/5 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -396,19 +396,19 @@ const AdminProducts = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="relative subcategory-dropdown">
                     <label className="block text-sm font-medium text-gray-700 mb-2">Sub Category *</label>
-                    <input 
-                      placeholder="Select or type sub category" 
-                      name="subCategory" 
-                      value={formData.subCategory} 
+                    <input
+                      placeholder="Select or type sub category"
+                      name="subCategory"
+                      value={formData.subCategory}
                       onChange={handleSubCategoryInput}
                       onFocus={() => setShowSubCategoryDropdown(true)}
                       onKeyPress={handleSubCategoryKeyPress}
                       disabled={!formData.category}
-                      required 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500 disabled:bg-gray-100" 
+                      required
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500 disabled:bg-gray-100"
                     />
                     {showSubCategoryDropdown && formData.category && (
                       <div className="absolute z-40 w-4/5 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -428,40 +428,40 @@ const AdminProducts = () => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Brand</label>
-                    <input 
-                      placeholder="Brand" 
-                      name="brand" 
-                      value={formData.brand} 
-                      onChange={handleChange} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Brand"
+                      name="brand"
+                      value={formData.brand}
+                      onChange={handleChange}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4 w-4/5">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Stock *</label>
-                      <input 
-                        placeholder="Stock" 
-                        type="number" 
-                        name="stock" 
-                        value={formData.stock} 
-                        onChange={handleChange} 
-                        required 
-                        className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                      <input
+                        placeholder="Stock"
+                        type="number"
+                        name="stock"
+                        value={formData.stock}
+                        onChange={handleChange}
+                        required
+                        className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Unit *</label>
-                      <select 
-                        name="unit" 
-                        value={formData.unit} 
-                        onChange={handleChange} 
-                        required 
+                      <select
+                        name="unit"
+                        value={formData.unit}
+                        onChange={handleChange}
+                        required
                         className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black"
                       >
                         <option value="" className="text-gray-500">Select Unit</option>
@@ -471,41 +471,41 @@ const AdminProducts = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-                    <input 
-                      placeholder="Tags (comma separated)" 
-                      name="tags" 
-                      value={formData.tags} 
-                      onChange={handleChange} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Tags (comma separated)"
+                      name="tags"
+                      value={formData.tags}
+                      onChange={handleChange}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Product Images *</label>
                     <div className="space-y-2 w-4/5">
                       {formData.images.map((img, i) => (
                         <div key={i} className="flex gap-2">
-                          <input 
-                            className="flex-1 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
-                            value={img} 
-                            onChange={(e) => updateImage(i, e.target.value)} 
-                            placeholder="Image URL" 
+                          <input
+                            className="flex-1 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
+                            value={img}
+                            onChange={(e) => updateImage(i, e.target.value)}
+                            placeholder="Image URL"
                           />
-                          <button 
-                            type="button" 
-                            onClick={() => removeImage(i)} 
+                          <button
+                            type="button"
+                            onClick={() => removeImage(i)}
                             className="bg-red-500 text-white px-3 rounded-lg hover:bg-red-600 transition-colors shadow-sm"
                           >
                             Remove
                           </button>
                         </div>
                       ))}
-                      <button 
-                        type="button" 
-                        onClick={addImage} 
+                      <button
+                        type="button"
+                        onClick={addImage}
                         className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors shadow-sm"
                       >
                         Add Image URL
@@ -524,55 +524,55 @@ const AdminProducts = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">Price *</label>
                     <div className="relative w-4/5">
                       <span className="absolute left-3 top-2 text-gray-500">$</span>
-                      <input 
-                        placeholder="0.00" 
-                        name="price" 
-                        type="number" 
+                      <input
+                        placeholder="0.00"
+                        name="price"
+                        type="number"
                         step="0.01"
-                        value={formData.price} 
-                        onChange={handleChange} 
-                        required 
-                        className="w-full rounded-lg pl-8 pr-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                        value={formData.price}
+                        onChange={handleChange}
+                        required
+                        className="w-full rounded-lg pl-8 pr-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                       />
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Discount Price</label>
                     <div className="relative w-4/5">
                       <span className="absolute left-3 top-2 text-gray-500">$</span>
-                      <input 
-                        placeholder="0.00" 
-                        name="discountPrice" 
-                        type="number" 
+                      <input
+                        placeholder="0.00"
+                        name="discountPrice"
+                        type="number"
                         step="0.01"
-                        value={formData.discountPrice} 
-                        onChange={handleChange} 
-                        className="w-full rounded-lg pl-8 pr-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                        value={formData.discountPrice}
+                        onChange={handleChange}
+                        className="w-full rounded-lg pl-8 pr-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                       />
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Offer Text</label>
-                    <input 
-                      placeholder="Special offer text" 
-                      name="offerText" 
-                      value={formData.offerText} 
-                      onChange={handleChange} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Special offer text"
+                      name="offerText"
+                      value={formData.offerText}
+                      onChange={handleChange}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div className="flex items-center mt-6">
-                    <input 
-                      type="checkbox" 
-                      id="isFeatured" 
-                      name="isFeatured" 
-                      checked={formData.isFeatured} 
-                      onChange={handleChange} 
+                    <input
+                      type="checkbox"
+                      id="isFeatured"
+                      name="isFeatured"
+                      checked={formData.isFeatured}
+                      onChange={handleChange}
                       className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                     />
                     <label htmlFor="isFeatured" className="ml-2 block text-sm text-gray-700">
@@ -582,61 +582,61 @@ const AdminProducts = () => {
                 </div>
               </div>
             )}
-            
+
             {/* Variants */}
             {activeTab === "variants" && (
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-lg font-medium text-gray-900">Product Variants</h3>
-                  <button 
-                    type="button" 
-                    onClick={addVariant} 
+                  <button
+                    type="button"
+                    onClick={addVariant}
                     className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
                   >
                     Add Variant
                   </button>
                 </div>
-                
+
                 <div className="space-y-4">
                   {formData.variants.map((v, i) => (
                     <div key={i} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">Color</label>
-                          <input 
-                            placeholder="Color" 
-                            value={v.color} 
-                            onChange={(e) => updateVariant(i, "color", e.target.value)} 
-                            className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                          <input
+                            placeholder="Color"
+                            value={v.color}
+                            onChange={(e) => updateVariant(i, "color", e.target.value)}
+                            className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                           />
                         </div>
-                        
+
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">Size</label>
-                          <input 
-                            placeholder="Size" 
-                            value={v.size} 
-                            onChange={(e) => updateVariant(i, "size", e.target.value)} 
-                            className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                          <input
+                            placeholder="Size"
+                            value={v.size}
+                            onChange={(e) => updateVariant(i, "size", e.target.value)}
+                            className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                           />
                         </div>
-                        
+
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">Stock</label>
-                          <input 
-                            placeholder="Stock" 
-                            type="number" 
-                            value={v.stock} 
-                            onChange={(e) => updateVariant(i, "stock", e.target.value)} 
-                            className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                          <input
+                            placeholder="Stock"
+                            type="number"
+                            value={v.stock}
+                            onChange={(e) => updateVariant(i, "stock", e.target.value)}
+                            className="w-full rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                           />
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-end mt-3">
-                        <button 
-                          type="button" 
-                          onClick={() => removeVariant(i)} 
+                        <button
+                          type="button"
+                          onClick={() => removeVariant(i)}
                           className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition-colors shadow-sm"
                         >
                           Remove Variant
@@ -644,7 +644,7 @@ const AdminProducts = () => {
                       </div>
                     </div>
                   ))}
-                  
+
                   {formData.variants.length === 0 && (
                     <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
                       <p className="text-gray-500">No variants added yet. Click "Add Variant" to create one.</p>
@@ -659,56 +659,56 @@ const AdminProducts = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Product Specifications</h3>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Material</label>
-                    <input 
-                      placeholder="Material" 
-                      value={formData.specifications.material} 
-                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, material: e.target.value } })} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Material"
+                      value={formData.specifications.material}
+                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, material: e.target.value } })}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Weight</label>
-                    <input 
-                      placeholder="Weight" 
-                      value={formData.specifications.weight} 
-                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, weight: e.target.value } })} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Weight"
+                      value={formData.specifications.weight}
+                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, weight: e.target.value } })}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Dimensions</label>
-                    <input 
-                      placeholder="Dimensions" 
-                      value={formData.specifications.dimensions} 
-                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, dimensions: e.target.value } })} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Dimensions"
+                      value={formData.specifications.dimensions}
+                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, dimensions: e.target.value } })}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-4 mt-8">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Origin</label>
-                    <input 
-                      placeholder="Origin" 
-                      value={formData.specifications.origin} 
-                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, origin: e.target.value } })} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Origin"
+                      value={formData.specifications.origin}
+                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, origin: e.target.value } })}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Washable</label>
-                    <input 
-                      placeholder="Washable" 
-                      value={formData.specifications.washable} 
-                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, washable: e.target.value } })} 
-                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500" 
+                    <input
+                      placeholder="Washable"
+                      value={formData.specifications.washable}
+                      onChange={(e) => setFormData({ ...formData, specifications: { ...formData.specifications, washable: e.target.value } })}
+                      className="w-4/5 rounded-lg px-4 py-2 bg-gray-50 transition shadow-sm text-black placeholder-gray-500"
                     />
                   </div>
                 </div>
@@ -727,7 +727,7 @@ const AdminProducts = () => {
                   </button>
                 )}
               </div>
-              
+
               <div className="flex gap-3">
                 <button
                   type="button"
@@ -736,7 +736,7 @@ const AdminProducts = () => {
                 >
                   Close
                 </button>
-                
+
                 <button
                   type="submit"
                   className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-md"
@@ -754,7 +754,7 @@ const AdminProducts = () => {
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white">
           <h2 className="text-xl font-semibold">All Products ({products.length})</h2>
         </div>
-        
+
         <div className="p-4">
           {products.length === 0 ? (
             <div className="text-center py-8">
@@ -765,10 +765,10 @@ const AdminProducts = () => {
               {products.map((p) => (
                 <div key={p._id} className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
                   <div className="relative">
-                    <img 
-                      src={p.images?.[0] || "/placeholder-image.jpg"} 
-                      alt={p.name} 
-                      className="w-full h-48 object-cover" 
+                    <img
+                      src={p.images?.[0] || "/placeholder-image.jpg"}
+                      alt={p.name}
+                      className="w-full h-48 object-cover"
                     />
                     {p.isFeatured && (
                       <span className="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded">
@@ -781,32 +781,33 @@ const AdminProducts = () => {
                       </span>
                     )}
                   </div>
-                  
+
                   <div className="p-4">
                     <h3 className="font-semibold text-lg text-gray-800 mb-1 truncate">{p.name}</h3>
                     <p className="text-gray-600 text-sm mb-2 truncate">{p.category} / {p.subCategory}</p>
-                    
+
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center">
-                        <span className="text-lg font-bold text-indigo-600">${p.price}</span>
+                        {/* এখানে সংশোধন করুন */}
+                        <span className="text-lg font-bold text-indigo-600">${p.discountPrice || p.price}</span>
                         {p.discountPrice && (
-                          <span className="ml-2 text-sm text-gray-500 line-through">${p.discountPrice}</span>
+                          <span className="ml-2 text-sm text-gray-500 line-through">${p.price}</span>
                         )}
                       </div>
                       <span className={`text-sm px-2 py-1 rounded-full ${p.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         {p.stock > 0 ? `${p.stock} in stock` : 'Out of stock'}
                       </span>
                     </div>
-                    
+
                     <div className="flex gap-2 mt-4">
-                      <button 
-                        onClick={() => deleteProduct(p._id)} 
+                      <button
+                        onClick={() => deleteProduct(p._id)}
                         className="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors shadow-sm"
                       >
                         Delete
                       </button>
-                      <button 
-                        onClick={() => handleEditProduct(p)} 
+                      <button
+                        onClick={() => handleEditProduct(p)}
                         className="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors shadow-sm"
                       >
                         Edit
@@ -819,6 +820,7 @@ const AdminProducts = () => {
           )}
         </div>
       </div>
+
     </div>
   );
 };
