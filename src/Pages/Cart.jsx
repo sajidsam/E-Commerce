@@ -312,11 +312,12 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-white rounded-3xl shadow-xl p-4 sm:p-6 border border-gray-100">
-              <div className="grid grid-cols-12 gap-3 sm:gap-4 text-sm font-semibold text-gray-600 pb-4 border-b border-gray-200">
-                <div className="col-span-7 lg:col-span-7">PRODUCT</div>
+              {/* Header - Adjusted grid columns */}
+              <div className="grid grid-cols-12 gap-2 sm:gap-3 text-sm font-semibold text-gray-600 pb-4 border-b border-gray-200">
+                <div className="col-span-5 lg:col-span-5">PRODUCT</div>
                 <div className="col-span-2 text-center">PRICE</div>
-                <div className="col-span-3 lg:col-span-2 text-center">QUANTITY</div>
-                <div className="col-span-2 lg:col-span-1 text-center">TOTAL</div>
+                <div className="col-span-3 text-center">QUANTITY</div>
+                <div className="col-span-2 text-center">TOTAL</div>
               </div>
 
               <div className="divide-y divide-gray-100">
@@ -326,85 +327,86 @@ const Cart = () => {
                   const hasDiscount = item.discountPrice && item.discountPrice < item.price;
                   
                   return (
-                    <div key={item._id} className="py-4 sm:py-6 group hover:bg-gray-50 transition-all duration-300 rounded-lg px-2">
-                      <div className="grid grid-cols-12 gap-3 sm:gap-4 items-center">
-                        {/* Product Info */}
-                        <div className="col-span-7 flex items-center gap-3 sm:gap-4">
+                    <div key={item._id} className="py-4 sm:py-6 group hover:bg-gray-50 transition-all duration-300 rounded-lg px-1">
+                      {/* Adjusted grid columns for better spacing */}
+                      <div className="grid grid-cols-12 gap-2 sm:gap-3 items-center">
+                        {/* Product Info - Reduced width */}
+                        <div className="col-span-5 flex items-center gap-2 sm:gap-3">
                           <div className="relative flex-shrink-0">
                             <img
                               src={item.productImage || item.images?.[0] || '/placeholder.png'}
                               alt={item.productName || item.name}
-                              className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 object-cover rounded-2xl shadow-md group-hover:shadow-lg transition-all"
+                              className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 object-cover rounded-xl shadow-md group-hover:shadow-lg transition-all"
                             />
                             {hasDiscount && (
-                              <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
+                              <div className="absolute -top-1 -left-1 sm:-top-1 sm:-left-1 bg-red-500 text-white px-1.5 py-0.5 rounded-full text-xs font-bold shadow-lg">
                                 {Math.round(((item.price - item.discountPrice) / item.price) * 100)}% OFF
                               </div>
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-gray-800 text-base sm:text-lg mb-1 line-clamp-2">
+                            <h3 className="font-semibold text-gray-800 text-sm sm:text-base mb-1 line-clamp-2 leading-tight">
                               {item.productName || item.name}
                             </h3>
-                            <p className="text-gray-500 text-sm mb-2">{item.brand}</p>
+                            <p className="text-gray-500 text-xs mb-1">{item.brand}</p>
                             <div className="flex gap-2">
                               <button
                                 onClick={() => saveForLater(item)}
-                                className="text-blue-500 hover:text-blue-700 text-sm font-medium flex items-center gap-1 transition"
+                                className="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center gap-1 transition"
                               >
                                 <FontAwesomeIcon icon={faHeart} className="text-xs" />
-                                Save for later
+                                Save
                               </button>
                             </div>
                           </div>
                         </div>
 
-                        {/* Price */}
+                        {/* Price - Centered */}
                         <div className="col-span-2">
                           <div className="flex flex-col items-center space-y-1">
-                            <span className="font-bold text-gray-800 text-base sm:text-lg">
+                            <span className="font-bold text-gray-800 text-sm sm:text-base">
                               ${formatPrice(itemPrice)}
                             </span>
                             {hasDiscount && (
-                              <span className="text-xs sm:text-sm text-gray-500 line-through">
+                              <span className="text-xs text-gray-500 line-through">
                                 ${formatPrice(item.price)}
                               </span>
                             )}
                           </div>
                         </div>
 
-                        {/* Quantity Controls */}
-                        <div className="col-span-3 lg:col-span-2">
-                          <div className="flex items-center justify-center gap-2 sm:gap-3">
+                        {/* Quantity Controls - Better spacing */}
+                        <div className="col-span-3">
+                          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                             <button
                               onClick={() => updateQuantity(item, (item.quantity || 1) - 1)}
-                              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 hover:border-gray-400 transition-all duration-200 shadow-sm"
                             >
-                              <FontAwesomeIcon icon={faMinus} className="text-gray-600 text-xs sm:text-sm" />
+                              <FontAwesomeIcon icon={faMinus} className="text-gray-600 text-xs" />
                             </button>
-                            <span className="font-bold text-gray-800 text-base sm:text-lg min-w-6 sm:min-w-8 text-center bg-gray-50 py-1 px-2 sm:px-3 rounded-lg">
+                            <span className="font-bold text-gray-800 text-sm sm:text-base min-w-6 text-center bg-gray-50 py-1 px-2 rounded-lg border border-gray-200">
                               {item.quantity || 1}
                             </span>
                             <button
                               onClick={() => updateQuantity(item, (item.quantity || 1) + 1)}
-                              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-100 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 hover:border-gray-400 transition-all duration-200 shadow-sm"
                             >
-                              <FontAwesomeIcon icon={faPlus} className="text-gray-600 text-xs sm:text-sm" />
+                              <FontAwesomeIcon icon={faPlus} className="text-gray-600 text-xs" />
                             </button>
                           </div>
                         </div>
 
-                        {/* Total & Actions */}
-                        <div className="col-span-2 lg:col-span-1 flex items-center justify-center gap-2 sm:gap-3">
-                          <span className="font-bold text-gray-800 text-base sm:text-lg">
+                        {/* Total & Actions - Better alignment */}
+                        <div className="col-span-2 flex flex-col items-center gap-1 sm:gap-2">
+                          <span className="font-bold text-gray-800 text-sm sm:text-base text-center">
                             ${formatPrice(itemTotal)}
                           </span>
                           <button
                             onClick={() => removeItem(item)}
-                            className="text-red-400 hover:text-red-600 transition-all duration-300 p-1 sm:p-2 hover:bg-red-50 rounded-lg"
+                            className="text-red-400 hover:text-red-600 transition-all duration-300 p-1 hover:bg-red-50 rounded-lg"
                             title="Remove item"
                           >
-                            <FontAwesomeIcon icon={faTrash} className="text-sm" />
+                            <FontAwesomeIcon icon={faTrash} className="text-xs sm:text-sm" />
                           </button>
                         </div>
                       </div>
