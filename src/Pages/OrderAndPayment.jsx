@@ -79,33 +79,43 @@ const OrderAndPayment = () => {
     }
   };
 
+  // Improved image URL getter function
+  const getImageUrl = (item) => {
+    return (
+      item.image || 
+      item.productImage || 
+      item.images?.[0] || 
+      '/placeholder.png'
+    );
+  };
+
+  // Improved product name getter function
+  const getProductName = (item) => {
+    return item.name || item.productName || 'Product';
+  };
+
   const handleStartShopping = () => {
     navigate('/products');
   };
 
   const handleViewDetails = (order) => {
     setSelectedOrder(order);
-    
     console.log('View details for order:', order);
   };
 
   const handleDownloadInvoice = (order) => {
-    // invoice download 
     console.log('Download invoice for order:', order);
   };
 
   const handleRateReview = (order) => {
-    // rate and review 
     console.log('Rate and review order:', order);
   };
 
   const handleTrackOrder = (order) => {
-    // Implement track order 
     console.log('Track order:', order);
   };
 
   const handleNeedHelp = (order) => {
-    // help/support 
     console.log('Need help with order:', order);
   };
 
@@ -294,15 +304,15 @@ const OrderAndPayment = () => {
                         {order.items?.map((item, index) => (
                           <div key={index} className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
                             <img
-                              src={item.image || '/placeholder.png'}
-                              alt={item.name}
+                              src={getImageUrl(item)}
+                              alt={getProductName(item)}
                               className="w-16 h-16 object-cover rounded-lg"
                               onError={(e) => {
                                 e.target.src = '/placeholder.png';
                               }}
                             />
                             <div className="flex-1">
-                              <h5 className="font-semibold text-gray-800">{item.name}</h5>
+                              <h5 className="font-semibold text-gray-800">{getProductName(item)}</h5>
                               <p className="text-gray-600 text-sm">Qty: {item.quantity}</p>
                               {item.variant && (
                                 <p className="text-gray-600 text-sm">

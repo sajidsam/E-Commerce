@@ -50,10 +50,10 @@ const Newsletter = () => {
             <div className="absolute -top-24 left-1/2 transform -translate-x-1/2">
                 <button 
                     onClick={scrollToTop}
-                    className="bg-black text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+                    className="bg-black text-white font-bold py-3 px-6 rounded-4xl hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl drop-shadow-2xl flex items-center gap-2"
                 >
                     <FontAwesomeIcon icon={faArrowUp} />
-                    Back to Top
+                    Back 
                 </button>
             </div>
 
