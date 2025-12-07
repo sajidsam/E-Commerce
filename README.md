@@ -4,11 +4,22 @@
 
 Live Demo: [GloBus-Commerce](https://e-commerce-two-sepia-58.vercel.app/)
 
+### Demo Screenshots
+
+![Home Page](src/assets/globusHOME.png)
+*Home Page of GloBus Commerce*
+
+![Cart Page](src/assets/globusCART.png)
+*Cart and Checkout Flow*
+
+![Order & Payment](src/assets/globusORDER\&PAYMENT.png)
+*Order confirmation and payment process*
+
 ---
 
 ## Features
 
-* Dynamic e-commerce experience — fully responsive and optimized for speed.
+* Dynamic e-commerce experience — fully optimized for speed.
 * User authentication — secure sign-in and sign-up using Firebase.
 * Smart navigation — organized routes with React Router.
 * Modern UI — built with Tailwind CSS for a clean and flexible design system.
@@ -77,10 +88,7 @@ npm run build
 
 ## Future Improvements
 
-* Product filtering and sorting system.
-* Payment gateway integration (SSLCommerz / Stripe).
 * AI-based product recommendation engine.
-* Admin dashboard for product management.
 * Real-time analytics dashboard.
 
 ---
