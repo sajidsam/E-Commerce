@@ -2,7 +2,7 @@
 
 **GloBus Commerce** is a modern, responsive, and scalable e-commerce web platform built with React and Vite. It provides a seamless online shopping experience with fast performance, user authentication, and dynamic product management.
 
-Live Demo: [GloBus-Commerce](e-commerce-two-sepia-58.vercel.app/)
+Live Demo: [GloBus-Commerce](https://e-commerce-two-sepia-58.vercel.app/)
 
 ---
 
